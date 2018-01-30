@@ -5,7 +5,7 @@ session_start();
 
 
 include('db.php'); 
-include('function.php'); 
+include('functions.php'); 
 
 
 ?>
