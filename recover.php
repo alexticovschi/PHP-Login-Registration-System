@@ -1,17 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Document</title>
-	<link rel="stylesheet" href="css/bootstrap.css">
-	<link rel="stylesheet" href="css/styles.css">
-	<script src="js/jquery.js"></script>
-	<script src="js/bootstrap.js"></script>
-	<script src="js/scripts.js"></script>
-</head>
-<body>
+<?php include('includes/header.php'); ?>
+	
 
-<div class="container">
+<div class="container">	
     <div class="row">
 				<div class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3">
 					<div class="alert-placeholder">
@@ -48,6 +38,6 @@
 					</div>
 				</div>
 			</div>
-	</div>
-</body>
-</html>
+</div> <!--Container-->	
+
+<?php include('includes/footer.php'); ?>

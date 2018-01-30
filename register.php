@@ -1,15 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Document</title>
-	<link rel="stylesheet" href="css/bootstrap.css">
-	<link rel="stylesheet" href="css/styles.css">
-	<script src="js/jquery.js"></script>
-	<script src="js/bootstrap.js"></script>
-	<script src="js/scripts.js"></script>
-</head>
-<body>
+<?php include('includes/header.php'); ?>
 
 
 	<nav class="navbar navbar-inverse navbar-fixed-top">
@@ -101,11 +90,6 @@
 				</div>
 			</div>
 		</div>
-	</div>
-
-
-
-
-	
-</body>
-</html>
+</div> <!--Container-->	
+		
+<?php include('includes/footer.php'); ?>
