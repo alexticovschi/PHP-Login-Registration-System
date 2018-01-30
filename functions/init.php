@@ -3,6 +3,8 @@
 include('db.php'); 
 include('function.php'); 
 
-echo 'It works!';
+if ($con) {
+	echo "Connection successful!";
+}
 
 ?>
