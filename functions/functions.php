@@ -50,6 +50,33 @@ function validation_errors($error_message) {
 	';
 }
 
+
+function email_exists($email) {
+	$sql = "SELECT id FROM users WHERE email = '$email'";
+
+	$result = query($sql);
+
+	if(row_count($result) == 1) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+
+function username_exists($username) {
+	$sql = "SELECT id FROM users WHERE username = '$username'";
+
+	$result = query($sql);
+
+	if(row_count($result) == 1) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+
 /* ======================== */
 /*   VALIDATION FUNCTIONS   */ 
 /* ======================== */
@@ -90,6 +117,14 @@ function validate_user_registration() {
 
 		if(strlen($username) > $max) {
 			$errors[] = "Your username cannot be greater than {$max} characters";
+		}
+
+		if(username_exists($username)) {
+			$errors[] = "Sorry this username is already taken";
+		}
+
+		if(email_exists($email)) {
+			$errors[] = "Sorry this email is already registered";
 		}
 
 		// if(strlen($email) > $max) {
