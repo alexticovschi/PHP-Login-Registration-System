@@ -77,6 +77,16 @@ function username_exists($username) {
 }
 
 
+
+
+function send_email($email, $subject, $msg, $header) {
+
+	return mail($email, $subject, $msg, $header);
+
+}
+
+
+
 /* ======================== */
 /*   VALIDATION FUNCTIONS   */ 
 /* ======================== */
@@ -143,9 +153,12 @@ function validate_user_registration() {
 		} else {
 			if(register_user($first_name, $last_name, $username, $email, $password)) {
 				set_message("<p class='bg-success text-center'>Please check your email for activation link</p>");
+				
 				redirect("index.php");
-
-				echo "USER REGISTERED";
+			} else {
+				set_message("<p class='bg-danger text-center'>Sorry, this user cannot be registered!</p>");
+				
+				redirect("index.php");
 			}
 		}
 	}
@@ -180,9 +193,65 @@ function register_user($first_name, $last_name, $username, $email, $password) {
 
 		confirm($result);
 
+
+		$subject = "Activate Account";
+		$msg     = "Please click the kink bellow to activate your Account
+					http://localhost/login/activate.php?email=$email&code=$validation_code
+					";
+		$header = "From: noreply@yourwebsite.com";
+
+		send_email($email, $subject, $msg, $headers);
+
 		return true;
 	}
+
+} 
+
+
+/** ACTIVATE USER **/
+
+function activate_user_account() {
+
+	if($_SERVER['REQUEST_METHOD'] == "GET") {
+
+		if(isset($_GET['email'])) {
+
+			echo $email = clean($_GET['email']);
+
+			echo $validation_code = clean($_GET['code']);
+
+			$sql = "SELECT id FROM users WHERE email = '" .escape($_GET['email']). "' AND validation_code = '" .escape($_GET['code']) ."'";
+
+			$result = query($sql);
+			confirm($result);
+
+			
+
+			if(row_count($result) == 1) {
+
+				$sql2 = "UPDATE users SET active = 1, validation_code = 0 WHERE email = '".escape($email)."' AND validation_code = '" .escape($validation_code). "'";
+				$result2 = query($sql2);
+				confirm($result2);
+
+				set_message("<p class='bg-success text-center'>Account activated! Please Login</p>");
+
+				redirect("login.php");
+
+			} else {
+				set_message("<p class='bg-danger text-center'>Account cannot be activated!</p>");
+
+				redirect("login.php");
+			}
+
+		} 
+	}
+
+	// http://localhost/login/activate.php?email=frankie@gmail.com&code=e8b31e688cc507204f2de7b7f36fbc7a 
 }
 
 
+
+
+
 ?>
+
