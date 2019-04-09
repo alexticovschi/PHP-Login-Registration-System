@@ -251,6 +251,39 @@ function activate_user_account() {
 
 
 
+/* ======================== */
+/*   VALIDATE USER LOGIN FUNCTIONS   */ 
+/* ======================== */
+
+function validate_user_login() {
+	$errors = [];
+
+	$min = 3;
+	$max = 20;
+
+	if($_SERVER['REQUEST_METHOD'] == "POST") {
+		$email 		= clean($_POST['email']);
+		$password   = clean($_POST['password']);
+
+		if(empty($email)) {
+			$errors[] = "Email field cannot be empty";
+		}
+
+		if(empty($password)) {
+			$errors[] = "Password field cannot be empty";
+		}
+
+		if(!empty($errors)) {
+			foreach ($errors as $error) { 
+				validation_errors($error);
+			}
+		}
+		else {
+			echo "NO ERRORS!";
+		}
+	}
+}
+
 
 
 ?>
