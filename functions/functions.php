@@ -304,6 +304,8 @@ function login_user($email, $password) {
 		$db_password = $row['password'];
 
 		if(md5($password) === $db_password) {
+			$_SESSION['email'] = $email;
+
 			return true;
 		}
 		else {
@@ -314,6 +316,14 @@ function login_user($email, $password) {
 }
 
 
+function logged_in() {
+	if(isset($_SESSION['email'])) {
+		return true;
+	} 
+	else {
+		return false;
+	}
+}
 
 
 
