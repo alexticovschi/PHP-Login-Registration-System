@@ -264,6 +264,7 @@ function validate_user_login() {
 	if($_SERVER['REQUEST_METHOD'] == "POST") {
 		$email 		= clean($_POST['email']);
 		$password   = clean($_POST['password']);
+		$remember   = isset($_POST['remember']);
 
 		if(empty($email)) {
 			$errors[] = "Email field cannot be empty";
@@ -279,7 +280,7 @@ function validate_user_login() {
 			}
 		}
 		else {
-			if(login_user($email, $password)) {
+			if(login_user($email, $password, $remember)) {
 				redirect("admin.php");
 			}
 			else {
@@ -295,7 +296,7 @@ function validate_user_login() {
 /*   USER LOGIN FUNCTIONS   */ 
 /* ======================== */
 
-function login_user($email, $password) {
+function login_user($email, $password, $remember) {
 	$sql = "SELECT password, id FROM users WHERE email = '" . escape($email) . "' AND active=1";
 	$result = query($sql);
 
@@ -305,6 +306,10 @@ function login_user($email, $password) {
 
 		if(md5($password) === $db_password) {
 			$_SESSION['email'] = $email;
+
+			if($remember == "on") {
+				setcookie('email', $email, time() + 86400);
+			}
 
 			return true;
 		}
@@ -317,7 +322,7 @@ function login_user($email, $password) {
 
 
 function logged_in() {
-	if(isset($_SESSION['email'])) {
+	if(isset($_SESSION['email']) || isset($_COOKIE['email'])) {
 		return true;
 	} 
 	else {
